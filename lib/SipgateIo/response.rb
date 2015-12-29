@@ -15,6 +15,13 @@ module SipgateIo
       @hangup_url = hangup_url
       @data_url = data_url
     end
+
+    # Returns an empty XML document
+    def okay
+      xml = Builder::XmlMarkup.new
+      xml.instruct!
+      xml.target!
+    end
     
     # Can be sent as a response to a new call event.
     #
