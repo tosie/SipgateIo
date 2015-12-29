@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'SipgateIo/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "SipgateIo"
+  spec.name          = "sipgateio"
   spec.version       = SipgateIo::VERSION
   spec.authors       = ["Thomas Siebers"]
   spec.email         = ["tom@tsiebers.de"]
