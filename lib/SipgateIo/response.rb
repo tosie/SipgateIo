@@ -1,8 +1,14 @@
 module SipgateIo
   
+  # Provides methods to generate a valid XML response to a sipgate.io event. The result of
+  # these methods can be sent back as the body of an HTTP response. Do not forget to set
+  # the HTTP header 'Content-Type' to 'application/xml'. The status code should be '200 OK'.
   class Response
+
+    GATHER_TYPES = [:dtmf]
+    REJECT_REASONS = [:rejected, :busy]
     
-    attr_writer :answer_url, :hangup_url, :data_url
+    attr_accessor :answer_url, :hangup_url, :data_url
     
     def initialize(answer_url: nil, hangup_url: nil, data_url: nil)
       @answer_url = answer_url
@@ -10,6 +16,16 @@ module SipgateIo
       @data_url = data_url
     end
     
+    # Can be sent as a response to a new call event.
+    #
+    # The parameters have slightly different meanings for incoming and outgoing calls as given
+    # by the +direction+ parameter of the new call event. Please see the sipgate.io README for
+    # more details.
+    #
+    # The values for +number+ and +caller_id+ must be formatted according to E164.
+    # Please see http://en.wikipedia.org/wiki/E.164 for details.
+    #
+    # +number+ can also be set to :voicemail to redirect incoming calls to a mailbox.
     def dial(number, caller_id: nil, anonymous: false)
       options = if number == :voicemail
                   nil
@@ -40,8 +56,6 @@ module SipgateIo
       end
     end
     
-    GATHER_TYPES = [:dtmf]
-    
     def gather(type: :dtmf, max_digits: nil, timeout: nil, play: nil)
       raise "Unknown type: #{type}" unless GATHER_TYPES.include?(type)
       
@@ -62,8 +76,6 @@ module SipgateIo
         end
       end
     end
-    
-    REJECT_REASONS = [:rejected, :busy]
     
     def reject(reason = :rejected)
       raise "Unknown reason: #{reason}" unless REJECT_REASONS.include?(reason)
