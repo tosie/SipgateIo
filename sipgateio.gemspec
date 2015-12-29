@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["tom@tsiebers.de"]
 
   spec.summary       = %q{A ruby implementation to http://sipgate.io}
-  spec.homepage      = "https://github.com/tosie/SipgateIo"
+  spec.homepage      = "https://github.com/tosie/sipgateio"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
